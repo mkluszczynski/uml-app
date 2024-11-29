@@ -1,5 +1,5 @@
 import { Draggable } from "@lib/Draggable";
-import { Class } from "src/types/Class";
+import { Class } from "src/classes/Class";
 import { Separator } from "./Separator";
 
 export type EditorProps = {

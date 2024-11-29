@@ -1,9 +1,3 @@
-// export type Field = {
-//   visibility: "+" | "-" | "#";
-//   name: string;
-//   type: string;
-// };
-
 import { Visibility, VisibilityType } from "./Visibility";
 
 export class Field {

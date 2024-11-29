@@ -1,16 +1,5 @@
-// export type Method = {
-//   visibility: "+" | "-" | "#";
-//   name: string;
-//   returnType: string;
-//   parameters: Parameter[];
-// };
-
+import { Parameter } from "src/types/Parameter";
 import { Visibility, VisibilityType } from "./Visibility";
-
-export type Parameter = {
-  name: string;
-  type: string;
-};
 
 export class Method {
   visibility: Visibility;

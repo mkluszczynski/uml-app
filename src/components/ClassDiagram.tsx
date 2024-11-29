@@ -1,4 +1,4 @@
-import { Class } from "src/types/Class";
+import { Class } from "src/classes/Class";
 import { Separator } from "./Separator";
 import { Draggable } from "@lib/Draggable";
 import { Position } from "src/types/Position";

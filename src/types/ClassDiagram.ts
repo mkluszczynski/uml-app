@@ -1,4 +1,4 @@
-import { Class } from "./Class";
+import { Class } from "../classes/Class";
 import { Position } from "./Position";
 
 export type ClassDiagram = {

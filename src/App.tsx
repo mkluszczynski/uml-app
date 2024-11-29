@@ -1,9 +1,9 @@
 import { ClassDiagram } from "./components/ClassDiagram";
 import { Editor } from "./components/Editor";
-import { Class } from "./types/Class";
+import { Class } from "./classes/Class";
 import { ClassDiagram as CDiagram } from "./types/ClassDiagram";
-import { Field } from "./types/Field";
-import { Method } from "./types/Method";
+import { Field } from "./classes/Field";
+import { Method } from "./classes/Method";
 
 function App() {
   const classes: Class[] = [
