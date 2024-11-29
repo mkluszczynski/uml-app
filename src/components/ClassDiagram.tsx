@@ -1,5 +1,5 @@
 import { Separator } from "./Separator";
-import { Draggable } from "../../lib/Draggable";
+import { Draggable } from "@lib/Draggable";
 
 export type ClassDiagramProps = {} & React.ComponentProps<"div">;
 
