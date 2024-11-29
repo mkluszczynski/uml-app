@@ -7,19 +7,19 @@ export function ClassDiagram(props: ClassDiagramProps) {
 
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const [isDragging, setIsDragging] = useState(false);
-
   let clickX = 0;
   let clickY = 0;
   let offsetLeft = 0;
   let offsetTop = 0;
 
-  const onMouseClick = (e: React.MouseEvent<Element, MouseEvent>) => {
+  const onMouseDown = (e: React.MouseEvent<Element, MouseEvent>) => {
     clickX = e.clientX;
     clickY = e.clientY;
-    elementRef.current?.addEventListener("mousemove", onMouseMove);
-    elementRef.current?.addEventListener("mouseup", closeDragElement);
+
     document.addEventListener("mouseup", closeDragElement);
+    document.addEventListener("mousemove", onMouseMove);
+
+    changeCursorToGrabbing();
   }
 
   const onMouseMove = (e: MouseEvent) => {
@@ -37,12 +37,22 @@ export function ClassDiagram(props: ClassDiagramProps) {
   }
   
   const closeDragElement = () => {
-    elementRef.current?.removeEventListener("mousemove", onMouseMove);
-    elementRef.current?.removeEventListener("mouseup", closeDragElement);
+    document.removeEventListener("mousemove", onMouseMove);
+    document.removeEventListener("mouseup", closeDragElement);
+
+    changeCursorToGrab();
+  }
+
+  const changeCursorToGrabbing = () => {
+    elementRef.current?.style.setProperty("cursor", "grabbing");
+  }
+
+  const changeCursorToGrab = () => {
+    elementRef.current?.style.setProperty("cursor", "grab");
   }
 
   return (
-    <div {...props} className="flex flex-col border border-black absolute cursor-move" onMouseDown={onMouseClick} ref={elementRef}>
+    <div {...props} className="flex flex-col border border-black absolute cursor-grab select-none" onMouseDown={onMouseDown} ref={elementRef}>
       <div className="p-1 bg-blue-400">Class name</div>
       <div>
         <div className="p-1">
