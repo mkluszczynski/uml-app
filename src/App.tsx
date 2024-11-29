@@ -1,48 +1,40 @@
 import { ClassDiagram } from "./components/ClassDiagram";
+import { Editor } from "./components/Editor";
 import { Class } from "./types/Class";
 import { ClassDiagram as CDiagram } from "./types/ClassDiagram";
+import { Field } from "./types/Field";
+import { Method } from "./types/Method";
 
 function App() {
   const classes: Class[] = [
-    {
-      name: "Person",
-      isAbstract: false,
-      fields: [
-        { visibility: "+", name: "name", type: "string" },
-        { visibility: "-", name: "age", type: "number" },
-        { visibility: "#", name: "address", type: "string" },
+    new Class(
+      "Person",
+      [
+        new Field("public", "name", "string"),
+        new Field("private", "age", "number"),
       ],
-      methods: [
-        {
-          visibility: "+",
-          name: "sayHello",
-          returnType: "void",
-          parameters: [],
-        },
+      [
+        new Method("public", "setName", "void", [
+          { name: "name", type: "string" },
+        ]),
+        new Method("private", "getName", "string", []),
       ],
-    },
-    {
-      name: "Student",
-      isAbstract: false,
-      fields: [
-        { visibility: "+", name: "studentId", type: "string" },
-        { visibility: "#", name: "gpa", type: "number" },
+      false
+    ),
+    new Class(
+      "Student",
+      [
+        new Field("public", "studentId", "string"),
+        new Field("private", "gpa", "number"),
       ],
-      methods: [
-        {
-          visibility: "+",
-          name: "study",
-          returnType: "void",
-          parameters: [],
-        },
-        {
-          visibility: "-",
-          name: "party",
-          returnType: "void",
-          parameters: [],
-        },
+      [
+        new Method("public", "setStudentId", "void", [
+          { name: "studentId", type: "string" },
+        ]),
+        new Method("private", "getStudentId", "string", []),
       ],
-    },
+      false
+    ),
   ];
 
   const classDiagrams: CDiagram[] = [
@@ -58,6 +50,7 @@ function App() {
 
   return (
     <div className="flex h-screen w-screen justify-center items-center bg-white">
+      <Editor class={classes[0]} />
       {classDiagrams.map((diagram: CDiagram, index: number) => (
         <ClassDiagram
           key={index}

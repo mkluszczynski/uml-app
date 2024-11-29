@@ -10,23 +10,19 @@ export type ClassDiagramProps = {
 
 export function ClassDiagram(props: ClassDiagramProps) {
   return (
-    <Draggable className="absolute cursor-grab" position={props.position}>
+    <Draggable position={props.position}>
       <div className="flex flex-col border border-black select-none bg-white">
         <div className="p-1 bg-blue-400">{props.class.name}</div>
         <div>
           <div className="p-1">
             {props.class.fields.map((field, index) => (
-              <p key={index}>
-                {field.visibility} {field.name}: {field.type}
-              </p>
+              <p key={index}>{field.toString()}</p>
             ))}
           </div>
           <Separator />
           <div className="p-1">
             {props.class.methods.map((method, index) => (
-              <p key={index}>
-                {method.visibility} {method.name}(): {method.returnType}
-              </p>
+              <p key={index}>{method.toString()}</p>
             ))}
           </div>
         </div>

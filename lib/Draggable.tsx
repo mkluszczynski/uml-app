@@ -66,6 +66,7 @@ export function Draggable(props: DraggableProps) {
       onMouseDown={onMouseDown}
       ref={elementRef}
       style={{ left: startX, top: startY }}
+      className="absolute cursor-grab"
       {...props}
     ></div>
   );
