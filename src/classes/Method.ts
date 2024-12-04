@@ -50,20 +50,30 @@ export class Method {
   }
 
   static fromCode(methodCode: string): Method | null {
-    console.log(methodCode);
     const methodPattern =
-      /(?:public|private|protected)?\s+(\w+)\(([^)]*)\):\s+(\w+);/;
+      /^(public|private|protected)?\s*(\w+)\(([^)]*)\):\s*(.+)$/;
     const methodMatch = methodCode.match(methodPattern);
 
     if (!methodMatch) {
       return null;
     }
 
-    const [, visibility, params, returnType] = methodMatch;
+    const [, visibility = "public", name, params, returnType]: string[] =
+      methodMatch;
+
     const parameters = params.split(",").map((param) => {
-      const [type, name] = param.split(":");
-      return { type: type.trim(), name: name.trim() };
+      const [name, type] = param.split(":").map((str) => str.trim());
+      return { name, type };
     });
+
+    // console.log("match", methodMatch);
+
+    // {
+    //   visibility,
+    //   name,
+    //   params: parameters,
+    //   returnType: returnType.trim(),
+    // };
 
     return new Method(visibility as VisibilityType, "", returnType, parameters);
   }

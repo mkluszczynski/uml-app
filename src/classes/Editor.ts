@@ -1,4 +1,6 @@
 import { Class } from "./Class";
+import { Field } from "./Field";
+import { Method } from "./Method";
 
 export class Editor {
   editedClass: Class;
@@ -22,19 +24,27 @@ export class Editor {
     return this.editedClass.name;
   }
 
-  parseClassCode() {
-    const className = this.parseCodeClassName();
-    const fields = this.parseCodeFields();
-    const methods = this.parseCodeMethods();
-
-    console.log("Class Name:", className);
-    console.log("Fields:", fields);
-    console.log("Methods:", methods);
-  }
-
   editClass() {
-    // Implement this method
-    this.editedClass.updateFromCode(this.code);
+    const className: string = this.parseCodeClassName();
+    const fieldsCode: string[] = this.parseCodeFields();
+    const methodsCode: string[] = this.parseCodeMethods();
+
+    const fieldClasses: Field[] = [];
+    fieldsCode.forEach((field) => {
+      const fieldClass = Field.fromCode(field);
+      if (fieldClass) fieldClasses.push(fieldClass);
+    });
+
+    const methodClasses: Method[] = [];
+    methodsCode.forEach((method) => {
+      const methodClass = Method.fromCode(method);
+      if (methodClass) methodClasses.push(methodClass);
+    });
+
+    this.editedClass.setName(className);
+    this.editedClass.setFields(fieldClasses);
+    this.editedClass.setMethods(methodClasses);
+
     console.log("Edited Class:", this.editedClass);
   }
 

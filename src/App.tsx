@@ -5,6 +5,7 @@ import { ClassDiagram as CDiagram } from "./types/ClassDiagram";
 import { Field } from "./classes/Field";
 import { Method } from "./classes/Method";
 import { useEffect, useState } from "react";
+import { useReactiveClass } from "./hooks/useReactiveClass";
 
 function App() {
   const classes: Class[] = [
@@ -49,10 +50,8 @@ function App() {
     },
   ]);
 
-  useEffect(() => {
-    console.log("Classes:", classes);
-    console.log("Class Diagrams:", classDiagrams);
-  }, [classDiagrams[0].class.fields, classDiagrams[1].class.fields]);
+  useReactiveClass(classes[0]);
+  useReactiveClass(classes[1]);
 
   return (
     <div className="flex h-screen w-screen justify-center items-center bg-white">

@@ -25,14 +25,15 @@ export class Field {
   }
 
   public static fromCode(fieldCode: string): Field | null {
-    const fieldPattern = /(?:public|private|protected)?\s+(\w+):\s+(\w+);/;
+    const fieldPattern =
+      /(?:public|private|protected)?\s*(\w+)\s+(\w+):\s+(\w+);/;
     const fieldMatch = fieldCode.match(fieldPattern);
 
     if (!fieldMatch) {
       return null;
     }
 
-    const [, visibility, name, type] = fieldMatch;
+    const [, visibility = "public", name, type] = fieldMatch;
     return new Field(visibility as VisibilityType, name, type);
   }
 }
