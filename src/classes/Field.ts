@@ -18,4 +18,21 @@ export class Field {
   public toCode(): string {
     return `${this.visibility.toCode()} ${this.name}: ${this.type};`;
   }
+
+  public static fromString(fieldString: string): Field {
+    const [visibility, name, type] = fieldString.split(" ");
+    return new Field(visibility as VisibilityType, name, type);
+  }
+
+  public static fromCode(fieldCode: string): Field | null {
+    const fieldPattern = /(?:public|private|protected)?\s+(\w+):\s+(\w+);/;
+    const fieldMatch = fieldCode.match(fieldPattern);
+
+    if (!fieldMatch) {
+      return null;
+    }
+
+    const [, visibility, name, type] = fieldMatch;
+    return new Field(visibility as VisibilityType, name, type);
+  }
 }

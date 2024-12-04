@@ -27,10 +27,6 @@ export function Draggable(props: DraggableProps) {
   };
 
   const onMouseMove = (e: MouseEvent) => {
-    if (elementRef.current) {
-      console.log(elementRef.current?.offsetLeft - e.clientX);
-      console.log(elementRef.current?.offsetTop - e.clientY);
-    }
     offsetLeft = clickX - e.clientX;
     offsetTop = clickY - e.clientY;
     clickX = e.clientX;

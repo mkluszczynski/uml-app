@@ -1,9 +1,10 @@
 import { ClassDiagram } from "./components/ClassDiagram";
-import { Editor } from "./components/Editor";
+import { EditorView } from "./components/Editor";
 import { Class } from "./classes/Class";
 import { ClassDiagram as CDiagram } from "./types/ClassDiagram";
 import { Field } from "./classes/Field";
 import { Method } from "./classes/Method";
+import { useEffect, useState } from "react";
 
 function App() {
   const classes: Class[] = [
@@ -37,7 +38,7 @@ function App() {
     ),
   ];
 
-  const classDiagrams: CDiagram[] = [
+  const [classDiagrams, setClassDiagrams] = useState<CDiagram[]>([
     {
       position: { x: 100, y: 100 },
       class: classes[0],
@@ -46,11 +47,16 @@ function App() {
       position: { x: 300, y: 100 },
       class: classes[1],
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    console.log("Classes:", classes);
+    console.log("Class Diagrams:", classDiagrams);
+  }, [classDiagrams[0].class.fields, classDiagrams[1].class.fields]);
 
   return (
     <div className="flex h-screen w-screen justify-center items-center bg-white">
-      <Editor class={classes[0]} />
+      <EditorView class={classes[0]} />
       {classDiagrams.map((diagram: CDiagram, index: number) => (
         <ClassDiagram
           key={index}
