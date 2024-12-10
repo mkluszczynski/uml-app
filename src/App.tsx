@@ -1,61 +1,28 @@
 import { ClassDiagram } from "./components/ClassDiagram";
 import { EditorView } from "./components/Editor";
-import { Class } from "./classes/Class";
 import { ClassDiagram as CDiagram } from "./types/ClassDiagram";
-import { Field } from "./classes/Field";
-import { Method } from "./classes/Method";
-import { useEffect, useState } from "react";
-import { useReactiveClass } from "./hooks/useReactiveClass";
+import { useState } from "react";
+import { ProjectService } from "./classes/ProjectService";
 
 function App() {
-  const classes: Class[] = [
-    new Class(
-      "Person",
-      [
-        new Field("public", "name", "string"),
-        new Field("private", "age", "number"),
-      ],
-      [
-        new Method("public", "setName", "void", [
-          { name: "name", type: "string" },
-        ]),
-        new Method("private", "getName", "string", []),
-      ],
-      false
-    ),
-    new Class(
-      "Student",
-      [
-        new Field("public", "studentId", "string"),
-        new Field("private", "gpa", "number"),
-      ],
-      [
-        new Method("public", "setStudentId", "void", [
-          { name: "studentId", type: "string" },
-        ]),
-        new Method("private", "getStudentId", "string", []),
-      ],
-      false
-    ),
-  ];
+  const projectService = new ProjectService();
+  const class1 = projectService.createClass("Person");
+  const class2 = projectService.createClass("Car");
 
   const [classDiagrams, setClassDiagrams] = useState<CDiagram[]>([
     {
       position: { x: 100, y: 100 },
-      class: classes[0],
+      class: class1,
     },
     {
       position: { x: 300, y: 100 },
-      class: classes[1],
+      class: class2,
     },
   ]);
 
-  useReactiveClass(classes[0]);
-  useReactiveClass(classes[1]);
-
   return (
     <div className="flex h-screen w-screen justify-center items-center bg-white">
-      <EditorView class={classes[0]} />
+      <EditorView class={class1} />
       {classDiagrams.map((diagram: CDiagram, index: number) => (
         <ClassDiagram
           key={index}

@@ -6,19 +6,16 @@ export abstract class ReactiveClass {
   }
 
   addListener(listener: Function) {
-    console.log("Adding listener");
     this.listeners.push(listener);
   }
 
   removeListener(listenerToRemove: Function) {
-    console.log("Removing listener");
     this.listeners = this.listeners.filter(
       (listener) => listenerToRemove !== listener
     );
   }
 
   notify() {
-    console.log("Notifying listeners");
     this.listeners.forEach((listener) => listener());
   }
 
