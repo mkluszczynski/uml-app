@@ -1,12 +1,14 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Position } from "src/types/Position";
 
 export type DraggableProps = {
   position?: Position;
+  headerRef?: React.RefObject<HTMLDivElement>;
 } & React.ComponentProps<"div">;
 
 export function Draggable(props: DraggableProps) {
   const elementRef = useRef<HTMLDivElement>(null);
+  const mainRef = props.headerRef || elementRef;
 
   let startX = props.position?.x || 0;
   let startY = props.position?.y || 0;
@@ -16,7 +18,8 @@ export function Draggable(props: DraggableProps) {
   let offsetLeft = 0;
   let offsetTop = 0;
 
-  const onMouseDown = (e: React.MouseEvent<Element, MouseEvent>) => {
+  const onMouseDown = (e: MouseEvent) => {
+    console.log("down");
     clickX = e.clientX;
     clickY = e.clientY;
 
@@ -27,6 +30,7 @@ export function Draggable(props: DraggableProps) {
   };
 
   const onMouseMove = (e: MouseEvent) => {
+    console.log("move");
     offsetLeft = clickX - e.clientX;
     offsetTop = clickY - e.clientY;
     clickX = e.clientX;
@@ -50,16 +54,19 @@ export function Draggable(props: DraggableProps) {
   };
 
   const changeCursorToGrabbing = () => {
-    elementRef.current?.style.setProperty("cursor", "grabbing");
+    mainRef.current?.style.setProperty("cursor", "grabbing");
   };
 
   const changeCursorToGrab = () => {
-    elementRef.current?.style.setProperty("cursor", "grab");
+    mainRef.current?.style.setProperty("cursor", "grab");
   };
+
+  useEffect(() => {
+    mainRef.current?.addEventListener("mousedown", onMouseDown);
+  }, []);
 
   return (
     <div
-      onMouseDown={onMouseDown}
       ref={elementRef}
       style={{ left: startX, top: startY }}
       className="absolute cursor-grab"
