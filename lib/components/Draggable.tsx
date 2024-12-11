@@ -19,7 +19,6 @@ export function Draggable(props: DraggableProps) {
   let offsetTop = 0;
 
   const onMouseDown = (e: MouseEvent) => {
-    console.log("down");
     clickX = e.clientX;
     clickY = e.clientY;
 
@@ -30,7 +29,6 @@ export function Draggable(props: DraggableProps) {
   };
 
   const onMouseMove = (e: MouseEvent) => {
-    console.log("move");
     offsetLeft = clickX - e.clientX;
     offsetTop = clickY - e.clientY;
     clickX = e.clientX;
