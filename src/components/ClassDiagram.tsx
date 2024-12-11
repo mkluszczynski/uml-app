@@ -1,6 +1,6 @@
 import { Class } from "src/classes/Class";
 import { Separator } from "./Separator";
-import { Draggable } from "@lib/Draggable";
+import { Draggable } from "@lib/components/Draggable";
 import { Position } from "src/types/Position";
 import { useReactiveClass } from "../hooks/useReactiveClass";
 import { toUpperSnakeCase } from "../utils/string";

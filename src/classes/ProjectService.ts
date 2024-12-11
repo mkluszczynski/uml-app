@@ -8,7 +8,7 @@ export class ProjectService {
     this.project = new Project({ useInMemoryFileSystem: true });
   }
 
-  createClass(name: string) {
+  createClass(name: string): Class {
     return new Class(name, this.project.createSourceFile(`${name}.ts`));
   }
 }

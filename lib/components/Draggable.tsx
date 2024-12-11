@@ -3,12 +3,12 @@ import { Position } from "src/types/Position";
 
 export type DraggableProps = {
   position?: Position;
-  headerRef?: React.RefObject<HTMLDivElement>;
+  headerref?: React.RefObject<HTMLDivElement>;
 } & React.ComponentProps<"div">;
 
 export function Draggable(props: DraggableProps) {
   const elementRef = useRef<HTMLDivElement>(null);
-  const mainRef = props.headerRef || elementRef;
+  const mainRef = props.headerref || elementRef;
 
   let startX = props.position?.x || 0;
   let startY = props.position?.y || 0;
