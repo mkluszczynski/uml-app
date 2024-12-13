@@ -61,7 +61,8 @@ export class Interface extends ReactiveClass {
   }
 
   updateFromCode(code: string) {
-    const node = this.file.insertText(0, code);
+    const fileLength = this.file.getText().length;
+    const node = this.file.replaceText([0, fileLength], code);
     const interfaceDeclaration = node.getInterface(this.getName());
     this.interfaceDeclaration = interfaceDeclaration || null;
     this.notify();
