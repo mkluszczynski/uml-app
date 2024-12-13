@@ -8,7 +8,7 @@ export type UMLField = {
   name: string;
   type: string;
   visibility: UMLVisibility;
-  isStatic: boolean;
+  isStatic?: boolean;
 };
 
 export type UMLMethod = {
@@ -16,5 +16,5 @@ export type UMLMethod = {
   name: string;
   returnType: string;
   parameters: MethodParameter[];
-  isStatic: boolean;
+  isStatic?: boolean;
 };

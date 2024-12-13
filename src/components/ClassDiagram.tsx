@@ -4,6 +4,7 @@ import { Draggable } from "@lib/components/Draggable";
 import { Position } from "src/types/Position";
 import { useReactiveClass } from "../hooks/useReactiveClass";
 import { toUpperSnakeCase } from "../utils/string";
+import { convertVisibilityToUML } from "../utils/UML";
 
 export type ClassDiagramProps = {
   class: Class;
@@ -19,12 +20,12 @@ export function ClassDiagram(props: ClassDiagramProps) {
         <div className="p-1 bg-blue-400">{props.class.getName()}</div>
         <div>
           <div className="p-1">
-            {props.class.getUMLFields().map((field, index) => {
+            {props.class.getFields().map((field, index) => {
               if (field.isStatic)
                 return (
-                  <p key={index}>{`${field.visibility} ${toUpperSnakeCase(
-                    field.name
-                  )}: ${field.type}`}</p>
+                  <p key={index}>{`${convertVisibilityToUML(
+                    field.visibility
+                  )} ${toUpperSnakeCase(field.name)}: ${field.type}`}</p>
                 );
               return (
                 <p
@@ -35,12 +36,12 @@ export function ClassDiagram(props: ClassDiagramProps) {
           </div>
           <Separator />
           <div className="p-1">
-            {props.class.getUMLMethods().map((method, index) => {
+            {props.class.getMethods().map((method, index) => {
               if (method.isStatic)
                 return (
-                  <p key={index}>{`${method.visibility} ${toUpperSnakeCase(
-                    method.name
-                  )} (${method.parameters
+                  <p key={index}>{`${convertVisibilityToUML(
+                    method.visibility
+                  )} ${toUpperSnakeCase(method.name)} (${method.parameters
                     .map((p) => `${p.name}: ${p.type}`)
                     .join(", ")}): ${method.returnType}`}</p>
                 );

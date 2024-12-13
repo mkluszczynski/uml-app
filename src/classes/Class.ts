@@ -1,10 +1,7 @@
-import React from "react";
 import { ReactiveClass } from "@lib/classes/ReactiveClass";
 import { ClassDeclaration, SourceFile } from "ts-morph";
 import { Field } from "src/types/Field";
 import { Method } from "src/types/Method";
-import { UMLField, UMLMethod } from "src/types/UML";
-import { UMLVisibilityTranslation } from "../const/UML";
 
 export class Class extends ReactiveClass {
   private file: SourceFile;
@@ -43,25 +40,6 @@ export class Class extends ReactiveClass {
     });
   }
 
-  getUMLFields(): UMLField[] {
-    if (!this.classDeclaration) return [];
-    return this.classDeclaration.getProperties().map((prop) => {
-      return {
-        name: prop.getName(),
-        type: prop.getType().getText(),
-        // TODO: Refactor
-        visibility:
-          UMLVisibilityTranslation[
-            prop
-              .getModifiers()
-              .find((m) => UMLVisibilityTranslation[m.getText()])
-              ?.getText() || "public"
-          ] || "+",
-        isStatic: prop.isStatic(),
-      };
-    });
-  }
-
   getMethods(): Method[] {
     if (!this.classDeclaration) return [];
     return this.classDeclaration.getMethods().map((method) => {
@@ -70,30 +48,6 @@ export class Class extends ReactiveClass {
           .getModifiers()
           .map((mod) => mod.getText())
           .join(" "),
-        name: method.getName(),
-        returnType: method.getReturnType().getText(),
-        parameters: method.getParameters().map((param) => {
-          return {
-            name: param.getName(),
-            type: param.getType().getText(),
-          };
-        }),
-        isStatic: method.isStatic(),
-      };
-    });
-  }
-
-  getUMLMethods(): UMLMethod[] {
-    if (!this.classDeclaration) return [];
-    return this.classDeclaration.getMethods().map((method) => {
-      return {
-        visibility:
-          UMLVisibilityTranslation[
-            method
-              .getModifiers()
-              .find((m) => UMLVisibilityTranslation[m.getText()])
-              ?.getText() || "public"
-          ] || "+",
         name: method.getName(),
         returnType: method.getReturnType().getText(),
         parameters: method.getParameters().map((param) => {

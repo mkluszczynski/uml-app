@@ -3,7 +3,7 @@ export type Method = {
   name: string;
   returnType: string;
   parameters: MethodParameter[];
-  isStatic: boolean;
+  isStatic?: boolean;
 };
 
 export type MethodParameter = {
