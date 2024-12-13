@@ -1,6 +1,6 @@
-import { ClassDiagram } from "./components/ClassDiagram";
+import { ClassDiagram } from "./components/ClassDiagram/ClassDiagram";
 import { EditorView } from "./components/Editor";
-import { ClassDiagram as CDiagram } from "./types/ClassDiagram";
+import { ClassDiagram as CDiagram } from "./types/Diagram";
 import { useState } from "react";
 import { ProjectService } from "./classes/ProjectService";
 

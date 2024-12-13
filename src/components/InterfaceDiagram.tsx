@@ -1,4 +1,4 @@
-import { Class } from "src/classes/Class";
+import { Class as Interface } from "src/classes/Class";
 import { Separator } from "./Separator";
 import { Draggable } from "@lib/components/Draggable";
 import { Position } from "src/types/Position";
@@ -6,27 +6,21 @@ import { useReactiveClass } from "../hooks/useReactiveClass";
 import { toUpperSnakeCase } from "../utils/string";
 import { convertVisibilityToUML } from "../utils/UML";
 
-export type ClassDiagramProps = {
-  class: Class;
+export type InterfaceDiagramProps = {
+  interface: Interface;
   position: Position;
 } & React.ComponentProps<"div">;
 
-export function ClassDiagram(props: ClassDiagramProps) {
-  useReactiveClass(props.class);
+export function InterfaceDiagram(props: InterfaceDiagramProps) {
+  useReactiveClass(props.interface);
 
   return (
     <Draggable position={props.position}>
       <div className="flex flex-col border border-black select-none bg-white">
-        <div className="p-1 bg-blue-400">{props.class.getName()}</div>
+        <div className="p-1 bg-blue-400">{props.interface.getName()}</div>
         <div>
           <div className="p-1">
-            {props.class.getFields().map((field, index) => {
-              if (field.isStatic)
-                return (
-                  <p key={index}>{`${convertVisibilityToUML(
-                    field.visibility
-                  )} ${toUpperSnakeCase(field.name)}: ${field.type}`}</p>
-                );
+            {props.interface.getFields().map((field, index) => {
               return (
                 <p
                   key={index}
@@ -36,7 +30,7 @@ export function ClassDiagram(props: ClassDiagramProps) {
           </div>
           <Separator />
           <div className="p-1">
-            {props.class.getMethods().map((method, index) => {
+            {props.interface.getMethods().map((method, index) => {
               if (method.isStatic)
                 return (
                   <p key={index}>{`${convertVisibilityToUML(
