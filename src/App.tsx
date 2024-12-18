@@ -12,7 +12,9 @@ function App() {
   const petClass = projectService.createClass("Pet");
 
   personClass.updateFromCode("class Person {\n  name: string;\n}");
-  petClass.updateFromCode("class Pet {\n  name: string;\n  owner: Person;\n}");
+  petClass.updateFromCode(
+    "class Pet {\n  name: string;\n  owner: Person;\n getOwner(name: Test, ata: Person, address: string): Person {}\n}"
+  );
 
   const manInterface = projectService.createInterface("Man");
   manInterface.updateFromCode("interface Man {\n  name: string;\n}");
