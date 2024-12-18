@@ -1,8 +1,10 @@
 import { ClassDiagram } from "./components/ClassDiagram/ClassDiagram";
 import { EditorView } from "./components/Editor";
 import { ClassDiagram as CDiagram } from "./types/Diagram";
+import { InterfaceDiagram as IDiagram } from "./types/Diagram";
 import { useState } from "react";
 import { ProjectService } from "./classes/ProjectService";
+import { InterfaceDiagram } from "./components/InterfaceDiagram/InterfaceDiagram";
 
 function App() {
   const projectService = new ProjectService();
@@ -12,6 +14,9 @@ function App() {
   personClass.updateFromCode("class Person {\n  name: string;\n}");
   petClass.updateFromCode("class Pet {\n  name: string;\n  owner: Person;\n}");
 
+  const manInterface = projectService.createInterface("Man");
+  manInterface.updateFromCode("interface Man {\n  name: string;\n}");
+
   const [classDiagrams, setClassDiagrams] = useState<CDiagram[]>([
     {
       position: { x: 100, y: 100 },
@@ -20,6 +25,13 @@ function App() {
     {
       position: { x: 300, y: 100 },
       class: petClass,
+    },
+  ]);
+
+  const [interfaceDiagrams, setInterfaceDiagrams] = useState<IDiagram[]>([
+    {
+      position: { x: 500, y: 200 },
+      interface: manInterface,
     },
   ]);
 
@@ -34,7 +46,24 @@ function App() {
             class={diagram.class}
             position={diagram.position}
           />
-          <EditorView key={`editor-${index}`} class={diagram.class} />
+          <EditorView
+            key={`editor-class-${index}`}
+            diagramSubject={diagram.class}
+          />
+        </>
+      ))}
+
+      {interfaceDiagrams.map((diagram: IDiagram, index: number) => (
+        <>
+          <InterfaceDiagram
+            key={index}
+            interface={diagram.interface}
+            position={diagram.position}
+          />
+          <EditorView
+            key={`editor-interface-${index}-`}
+            diagramSubject={diagram.interface}
+          />
         </>
       ))}
     </div>

@@ -27,4 +27,5 @@ export abstract class DiagramSubject<T> extends ReactiveClass {
 
   abstract getFields(): Field[];
   abstract getMethods(): Method[];
+  abstract updateFromCode(code: string): void;
 }

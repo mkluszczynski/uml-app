@@ -1,11 +1,11 @@
 import { Draggable } from "@lib/components/Draggable";
-import { Class } from "src/classes/Class";
 import { Separator } from "./Separator";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { useRef } from "react";
+import { DiagramSubject } from "@src/classes/abstract/DiagramSubject";
 
 export type EditorProps = {
-  class: Class;
+  diagramSubject: DiagramSubject<unknown>;
 };
 
 export function EditorView(props: EditorProps) {
@@ -15,14 +15,14 @@ export function EditorView(props: EditorProps) {
     <Draggable headerref={headerRef}>
       <div className="flex flex-col bg-gray-800 min-w-[200px]">
         <div className="text-white p-2" ref={headerRef}>
-          {props.class.getName()} Editor
+          {props.diagramSubject.getName()} Editor
         </div>
         <Separator />
         <CodeEditor
-          value={props.class.getCode()}
+          value={props.diagramSubject.getCode()}
           language="js"
           placeholder="Please enter JS code."
-          onChange={(e) => props.class.updateFromCode(e.target.value)}
+          onChange={(e) => props.diagramSubject.updateFromCode(e.target.value)}
           padding={15}
           style={{
             fontFamily:
