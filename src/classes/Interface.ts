@@ -1,31 +1,20 @@
-import { ReactiveClass } from "@lib/classes/ReactiveClass";
-import { InterfaceDeclaration, SourceFile } from "ts-morph";
+import { InterfaceDeclaration } from "ts-morph";
 import { Method } from "src/types/Method";
 import { Field } from "@src/types/Field";
+import { DiagramSubject } from "./abstract/DiagramSubject";
 
-export class Interface extends ReactiveClass {
-  private file: SourceFile;
-  private interfaceDeclaration: InterfaceDeclaration | null;
-  private interfaceName: string;
-
-  constructor(name: string, file: SourceFile) {
-    super();
-    this.interfaceName = name;
-    this.file = file;
-    this.interfaceDeclaration = this.file.addInterface({
-      name: name,
+export class Interface extends DiagramSubject<InterfaceDeclaration> {
+  initDeclaration() {
+    this.subjectDeclaration = this.file.addInterface({
+      name: this.getName(),
       methods: [],
       properties: [],
     });
   }
 
-  getName(): string {
-    return this.interfaceName;
-  }
-
   getFields(): Field[] {
-    if (!this.interfaceDeclaration) return [];
-    return this.interfaceDeclaration.getProperties().map((prop) => {
+    if (!this.subjectDeclaration) return [];
+    return this.subjectDeclaration.getProperties().map((prop) => {
       return {
         name: prop.getName(),
         type: prop.getType().getText(),
@@ -40,8 +29,8 @@ export class Interface extends ReactiveClass {
   }
 
   getMethods(): Method[] {
-    if (!this.interfaceDeclaration) return [];
-    return this.interfaceDeclaration.getMethods().map((method) => {
+    if (!this.subjectDeclaration) return [];
+    return this.subjectDeclaration.getMethods().map((method) => {
       return {
         visibility: "",
         name: method.getName(),
@@ -64,7 +53,7 @@ export class Interface extends ReactiveClass {
     const fileLength = this.file.getText().length;
     const node = this.file.replaceText([0, fileLength], code);
     const interfaceDeclaration = node.getInterface(this.getName());
-    this.interfaceDeclaration = interfaceDeclaration || null;
+    this.subjectDeclaration = interfaceDeclaration || null;
     this.notify();
     console.log(
       "Interface",

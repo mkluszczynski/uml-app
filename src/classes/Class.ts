@@ -1,31 +1,20 @@
-import { ReactiveClass } from "@lib/classes/ReactiveClass";
-import { ClassDeclaration, SourceFile } from "ts-morph";
+import { ClassDeclaration } from "ts-morph";
 import { Field } from "src/types/Field";
 import { Method } from "src/types/Method";
+import { DiagramSubject } from "./abstract/DiagramSubject";
 
-export class Class extends ReactiveClass {
-  private file: SourceFile;
-  private classDeclaration: ClassDeclaration | null;
-  private className: string;
-
-  constructor(name: string, file: SourceFile) {
-    super();
-    this.className = name;
-    this.file = file;
-    this.classDeclaration = this.file.addClass({
-      name: name,
+export class Class extends DiagramSubject<ClassDeclaration> {
+  initDeclaration(): void {
+    this.subjectDeclaration = this.file.addClass({
+      name: this.getName(),
       methods: [],
       properties: [],
     });
   }
 
-  getName(): string {
-    return this.className;
-  }
-
   getFields(): Field[] {
-    if (!this.classDeclaration) return [];
-    return this.classDeclaration.getProperties().map((prop) => {
+    if (!this.subjectDeclaration) return [];
+    return this.subjectDeclaration.getProperties().map((prop) => {
       return {
         name: prop.getName(),
         type: prop.getType().getText(),
@@ -41,8 +30,8 @@ export class Class extends ReactiveClass {
   }
 
   getMethods(): Method[] {
-    if (!this.classDeclaration) return [];
-    return this.classDeclaration.getMethods().map((method) => {
+    if (!this.subjectDeclaration) return [];
+    return this.subjectDeclaration.getMethods().map((method) => {
       return {
         visibility: method
           .getModifiers()
@@ -61,15 +50,11 @@ export class Class extends ReactiveClass {
     });
   }
 
-  getCode(): string {
-    return this.file.getText();
-  }
-
   updateFromCode(code: string) {
     const fileLength = this.file.getText().length;
     const node = this.file.replaceText([0, fileLength], code);
     const classDeclaration = node.getClass(this.getName());
-    this.classDeclaration = classDeclaration || null;
+    this.subjectDeclaration = classDeclaration || null;
     this.notify();
     console.log("Class", this.getName(), this.getFields(), this.getMethods());
   }
